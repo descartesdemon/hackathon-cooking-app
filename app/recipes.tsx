@@ -1,4 +1,4 @@
-import { Text, View, FlatList, StyleSheet } from "react-native";
+import { Text, View, FlatList, StyleSheet, Button, TouchableOpacity } from "react-native";
 import React, { useState, useEffect } from "react";
 import { Image } from "react-native";
 import OpenAI from "openai";
@@ -12,10 +12,18 @@ const RecipeDisplayItem = ({recipe}) => {
     <View style={{ width: '90%', backgroundColor: 'lightgray', marginBottom: 10, padding: 10 }}>
       <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{recipe.name}</Text>
       <Image source={{ uri: recipe.picture }} style={{ width: '100%', height: 200 }} />
-      <Text>Ingredients: {recipe.ingredients.join(', ')}</Text>
+      {/*<Text>Ingredients: {recipe.ingredients.join(', ')}</Text>*/}
       <Text>Time: {recipe.time}</Text>
       <Text>Allergens: {recipe.allergens.join(', ')}</Text>
-      <Text>Instructions: {recipe.instructions}</Text>
+      {/*<Text>Instructions: {recipe.instructions}</Text>*/}
+      <TouchableOpacity
+        style={{ backgroundColor: 'green', padding: 8, alignItems: 'center', borderRadius: 5 }}
+        onPress={() => {
+          // Handle button press here
+        }}
+      >
+        <Text style={{ color: 'white' }}>Show Recipe</Text>
+      </TouchableOpacity>
     </View>
   )
 }
