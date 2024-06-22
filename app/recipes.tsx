@@ -1,5 +1,5 @@
-import { Text, View, ScrollView } from "react-native";
-import React, { useState } from "react";
+import { Text, View, FlatList, StyleSheet } from "react-native";
+import React, { useState, useEffect } from "react";
 import { Image } from "react-native";
 import OpenAI from "openai";
 
@@ -20,12 +20,42 @@ const RecipeDisplayItem = ({recipe}) => {
   )
 }
 
+const generatePictureByName = async name => {
+  console.log("generating picture!!!");
+  const response = await openai.images.generate({
+    model: "dall-e-3",
+    prompt: name,
+    n: 1,
+    size: "1024x1024",
+  })
+  const url = response.data[0].url;
+  console.log(url);
+  return url;
+}
+
+const fixPicture = async recipe => {
+  if (recipe.picture !== '') {
+    return recipe;
+  } else {
+    try {
+      const newPicture = await generatePictureByName(recipe.name);
+      return {
+        ...recipe,
+        picture: newPicture
+      };
+    } catch (error) {
+      console.error(`Failed to generate picture for ${recipe.name}: ${error}`);
+      return recipe; // Return the original recipe if picture generation fails
+    }
+  }
+}
+
 export default function Recipes() {
   //const [recipesList, setRecipesList] = useState([]);
 
   const [recipesList, setRecipesList] = useState([
     {
-      name: 'Recipe 1',
+      name: 'Fetuccine alfredo',
       picture: '',
       ingredients: ['ingredient 1', 'ingredient 2'],
       time: '30 minutes',
@@ -33,7 +63,7 @@ export default function Recipes() {
       instructions: 'Instructions for Recipe 1'
     },
     {
-      name: 'Recipe 2',
+      name: 'pot stickers',
       picture: '',
       ingredients: ['ingredient 3', 'ingredient 4'],
       time: '45 minutes',
@@ -43,28 +73,30 @@ export default function Recipes() {
     // Add more recipes here
   ]);
 
-  const fixPicture = recipe => {
-    if (recipe.picture !== '') {
-      return recipe;
-    } else {
-      return {
-        ...recipe,
-        picture: recipe.name
-      };
+  const updatePictures = async () => {
+    try {
+      const updatedRecipesList = await Promise.all(recipesList.map(fixPicture));
+      setRecipesList(updatedRecipesList);
+    } catch (error) {
+      console.error(`Failed to update pictures: ${error}`);
     }
-  }
-
-  const updatePictures = () => {
-    const updatedRecipesList = recipesList.map(recipe => ({
-      ...recipe,
-      picture: '123'
-    }));
-  
-    setRecipesList(updatedRecipesList);
   };
 
+  useEffect(() => {
+    updatePictures();
+  }, []); // Empty dependency array means this effect runs once on mount
+
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  });
+
   return (
-    <ScrollView
+    /*<ScrollView
       contentContainerStyle={{
         flexGrow: 1,
         justifyContent: "center",
@@ -74,6 +106,18 @@ export default function Recipes() {
       {recipesList.map((recipe, index) => (
         <RecipeDisplayItem key={index} recipe={recipe} />
       ))}
-    </ScrollView>
+    </ScrollView>*/
+
+    
+    // ...
+    <FlatList
+      data={recipesList}
+      keyExtractor={(item, index) => index.toString()} // Add a key extractor
+      renderItem={({ item }) => (
+        <View style={styles.container}>
+          <RecipeDisplayItem recipe={item} />
+        </View>
+      )}
+    />
   );
 }
