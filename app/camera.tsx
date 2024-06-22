@@ -1,10 +1,11 @@
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 
 export default function Camera() {
   const [facing, setFacing] = useState('back');
-  const [permission, requestPermission] = useCameraPermissions()
+  const [permission, requestPermission] = useCameraPermissions();
+  const cameraRef = useRef(null);
   /*return (
     <View
       style={{
@@ -16,6 +17,15 @@ export default function Camera() {
       <Text>2</Text>
     </View>
   );*/
+
+  const takePicture = async () => {
+    if (cameraRef.current) {
+      const options = { quality: 0.5, base64: true };
+      const data = await cameraRef.current.takePictureAsync(options);
+      console.log(data.uri);
+    }
+  };
+
   if (!permission) {
     // Camera permissions are still loading.
     return <View />;
@@ -36,6 +46,9 @@ export default function Camera() {
   return (
     <View style={styles.container}>
       <CameraView style={styles.camera} facing={'back'}>
+      <View style={styles.buttonContainer}>
+          <Button title="Take Picture" onPress={takePicture} />
+        </View>
       </CameraView>
     </View>
   );
@@ -50,10 +63,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   buttonContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: 'transparent',
-    margin: 64,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 70,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
   button: {
     flex: 1,
