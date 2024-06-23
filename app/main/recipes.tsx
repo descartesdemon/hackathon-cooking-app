@@ -113,14 +113,7 @@ export default function Recipes() {
 
   const [recipesList, setRecipesList] = useState([
     // Add more recipes here
-    {
-      name: 'Fetuccine alfredo',
-      picture: 'https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg',
-      ingredients: ['ingredient 1', 'ingredient 2'],
-      time: '30 minutes',
-      allergens: ['allergen 1', 'allergen 2'],
-      instructions: 'Instructions for Recipe 1'
-    }
+
   ]);
 
   const updatePictures = async () => {

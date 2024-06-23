@@ -2,12 +2,12 @@ import { StyleSheet, View, Pressable, Text } from 'react-native';
 
 export default function RoundedButton({ title, onPress, buttonStyle = null, containerStyle = null, textStyle = null}) {
   return (
-        <View style={[styles.buttonContainer, { borderWidth: 2, borderColor: "#888888", borderRadius: 10 }]}>
+        <View style={[containerStyle || styles.buttonContainer, { borderWidth: 2, borderColor: "#888888", borderRadius: 10 }]}>
           <Pressable
-            style={[styles.button, { backgroundColor: "#fff" }]}
+            style={[buttonStyle || styles.button, { backgroundColor: "#fff" }]}
             onPress={onPress}
           >
-            <Text style={[styles.buttonLabel, { color: "#25292e" }]}>{title}</Text>
+            <Text style={[textStyle || styles.buttonLabel, { color: "#25292e" }]}>{title}</Text>
           </Pressable>
         </View>
   

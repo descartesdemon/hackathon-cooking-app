@@ -30,15 +30,15 @@ export default function Camera() {
   const takePicture = async () => {
     if (cameraRef.current) {
       const options = { quality: 0.5, base64: true };
-      //const data = await cameraRef.current.takePictureAsync(options);
+      const data = await cameraRef.current.takePictureAsync(options);
       // console.log(data.base64);
-      /*const response = await openai.chat.completions.create({
+      const response = await openai.chat.completions.create({
         model: "gpt-4o",
         messages: [
           {
             role: "user",
             content: [
-              { type: "text", text: "What food ingredients are in this image? Answer in list form." },
+              { type: "text", text: "What food ingredients are in this image? Answer in list form like this: carrots, potatoes, pineapple, and so on" },
               {
                 type: "image_url",
                 image_url: {
@@ -48,9 +48,9 @@ export default function Camera() {
             ],
           },
         ],
-      });*/
-      //todo navigation.navigate("start", {ingredients: response.choices[0].message.content});
-      navigation.navigate("start", {ingredients: "carrots potatoes banana"});
+      });
+      navigation.navigate("start", {ingredients: response.choices[0].message.content});
+      //navigation.navigate("start", {ingredients: "carrots potatoes banana"});
       //console.log(response.choices[0]);
       /*Alert.alert(
         "Picture Taken",

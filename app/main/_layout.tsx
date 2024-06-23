@@ -7,7 +7,6 @@ export default function StackLayout() {
   const colorScheme = useColorScheme();
   
   //const [preferences, setPreferences] = useState(0);
-
   
   return (
     <Stack
