@@ -1,13 +1,14 @@
-import { Text, View, FlatList, StyleSheet, Button, TouchableOpacity } from "react-native";
+import { Text, View, FlatList, StyleSheet, TouchableOpacity } from "react-native";
+import RoundedButton from '@/components/RoundedButton';
 import React, { useState, useEffect } from "react";
 import { useNavigation } from 'expo-router';
 import { useRoute } from '@react-navigation/native';
 import { Image } from "react-native";
 import OpenAI from "openai";
 
-//const api_key = 'sk-proj-RRaU29oFQPBxdrQ8A315T3BlbkFJ7LwKTCwpE1CRw1LohoIj';
+const api_key = 'sk-proj-RRaU29oFQPBxdrQ8A315T3BlbkFJ7LwKTCwpE1CRw1LohoIj';
 
-const api_key = null;
+//const api_key = null;
 
 const openai = new OpenAI({apiKey: api_key});
 
@@ -83,24 +84,32 @@ export default function Recipes() {
 
   const RecipeDisplayItem = ({recipe}) => {
     return (
-      <View style={{ width: '90%', backgroundColor: 'lightgray', marginBottom: 10, padding: 10 }}>
-        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{recipe.name}</Text>
-        <Image source={{ uri: recipe.picture }} style={{ width: '100%', height: 200 }} />
-        {/*<Text>Ingredients: {recipe.ingredients.join(', ')}</Text>*/}
-        <Text>Time: {recipe.time}</Text>
-        <Text>Allergens: {recipe.allergens}</Text>
-        {/*<Text>Instructions: {recipe.instructions}</Text>*/}
-        <TouchableOpacity
-          style={{ backgroundColor: 'green', padding: 8, alignItems: 'center', borderRadius: 5 }}
-          onPress={() => {
-            navigation.navigate("recipe-expansion", {recipeItem: recipe});
-          }}
-        >
-          <Text style={{ color: 'white' }}>Show Recipe</Text>
-        </TouchableOpacity>
+      <View style={{ 
+        width: '90%', 
+        backgroundColor: '#F5F5F5', 
+        marginBottom: 20, 
+        padding: 20, 
+        borderRadius: 10, 
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+      }}>
+      <Text style={{ fontSize: 24, fontFamily: 'Inter-Bold', marginBottom: 10 }}>{recipe.name}</Text>
+        <Image source={{ uri: recipe.picture }} style={{ width: '100%', height: 200, borderRadius: 10 }} />
+        <Text style={{ marginTop: 10, fontFamily: 'Inter-Regular' }}>Time: {recipe.time}</Text>
+        <Text style={{ marginTop: 5, fontFamily: 'Inter-Regular' }}>Allergens: {recipe.allergens.join(', ')}</Text>
+        <View style = {{ marginTop: 10, width: '100%', alignItems: 'center' }}>
+          <RoundedButton title="Show Recipe" onPress={() => navigation.navigate("recipe-expansion", {recipeItem: recipe})}/>
+        </View>
       </View>
     )
   }
+
 
   const [recipesList, setRecipesList] = useState([
     // Add more recipes here

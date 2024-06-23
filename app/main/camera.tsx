@@ -4,9 +4,9 @@ import { CameraView, useCameraPermissions } from 'expo-camera';
 import { useNavigation } from 'expo-router';
 import OpenAI from "openai";
 
-//const api_key = 'sk-proj-RRaU29oFQPBxdrQ8A315T3BlbkFJ7LwKTCwpE1CRw1LohoIj';
+const api_key = 'sk-proj-RRaU29oFQPBxdrQ8A315T3BlbkFJ7LwKTCwpE1CRw1LohoIj';
 
-const api_key = null;
+//const api_key = null;
 
 const openai = new OpenAI({apiKey: api_key});
 
@@ -38,7 +38,7 @@ export default function Camera() {
           {
             role: "user",
             content: [
-              { type: "text", text: "What food items are in this image? Answer in list form." },
+              { type: "text", text: "What food ingredients are in this image? Answer in list form." },
               {
                 type: "image_url",
                 image_url: {
