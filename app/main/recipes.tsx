@@ -5,6 +5,7 @@ import { useNavigation } from 'expo-router';
 import { useRoute } from '@react-navigation/native';
 import { Image } from "react-native";
 import OpenAI from "openai";
+import Loading from '@/components/Loading'
 
 const api_key = 'sk-proj-RRaU29oFQPBxdrQ8A315T3BlbkFJ7LwKTCwpE1CRw1LohoIj';
 
@@ -116,6 +117,8 @@ export default function Recipes() {
 
   ]);
 
+  const [loading, setLoading] = useState(false);
+
   const updatePictures = async () => {
     try {
       const updatedRecipesList = await Promise.all(recipesList.map(fixPicture));
@@ -140,7 +143,7 @@ export default function Recipes() {
               role: "system",
               content: "You are a helpful assistant designed to write syntactically valid Javascript lists.",
             },
-            { role: "user", content: `Generate a list of exactly 1 distinct foods that can be made using ${params.ingredients} in this format ['Pepperoni Pizza','Chicken Alfredo','Shrimp Fried Rice']` },
+            { role: "user", content: `Generate a list of exactly 5 distinct foods that can be made using ${params.ingredients} in this format ['Pepperoni Pizza','Chicken Alfredo','Shrimp Fried Rice']` },
           ],
           model: "gpt-3.5-turbo-0125",
         });
@@ -162,8 +165,10 @@ export default function Recipes() {
           item.picture = await generatePictureByName(food);
           return item;
         });
+        setLoading(true);
         const items = await Promise.all(promises);
-        console.log(`AAAA ${[...recipesList, ...items]}`)
+        setLoading(false);
+        //console.log(`AAAA ${[...recipesList, ...items]}`)
         setRecipesList([...recipesList, ...items]);
       }
     }
@@ -179,20 +184,8 @@ export default function Recipes() {
   });
 
   return (
-    /*<ScrollView
-      contentContainerStyle={{
-        flexGrow: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      {recipesList.map((recipe, index) => (
-        <RecipeDisplayItem key={index} recipe={recipe} />
-      ))}
-    </ScrollView>*/
-
-    
-    // ...
+    <>
+    <Loading isLoading={loading} />
     <FlatList
       data={recipesList}
       keyExtractor={(item, index) => index.toString()} // Add a key extractor
@@ -202,5 +195,6 @@ export default function Recipes() {
         </View>
       )}
     />
+    </>
   );
 }

@@ -2,6 +2,7 @@ import { useNavigation } from 'expo-router';
 import { useRoute } from '@react-navigation/native';
 import { Text, ScrollView, View, TextInput, Button, TouchableOpacity, FlatList, StyleSheet } from "react-native";
 import React, { useState, useEffect } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import RoundedButton from '@/components/RoundedButton';
 
 /*const cuisines = ['Mexican', 'Chinese', 'Italian', 'Indian', 'Thai', 'French', 'Russian', 'German'];
@@ -58,7 +59,12 @@ export default function Start() {
     console.log
     console.log(params);
     if (params) {
-      setText(params.ingredients);
+      if (params.ingredients) {
+        setText(params.ingredients);
+      }
+      if (params.preferences) {
+        AsyncStorage.setItem("preferences", JSON.stringify(params.preferences));
+      }
     }
   }, [route]);
 

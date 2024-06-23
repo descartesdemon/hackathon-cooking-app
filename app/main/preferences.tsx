@@ -1,6 +1,8 @@
 import { Text, View, ScrollView, TextInput, Button, TouchableOpacity, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState, useEffect } from "react";
 import RoundedButton from '@/components/RoundedButton';
+import { useNavigation } from 'expo-router';
 
 const dietary = ['Vegan', 'Vegetarian', 'Pescetarian', 'Gluten Free', 'Dairy Free', 'Ketogenic', 'Paleolithic', 'Nut Free', 'Fish Free' /* etc. */];
 
@@ -8,6 +10,8 @@ const dietary = ['Vegan', 'Vegetarian', 'Pescetarian', 'Gluten Free', 'Dairy Fre
 
 export default function Preferences() {
   const [text, setText] = useState("");
+
+  const navigation = useNavigation();
 
   const OptionsBox = ({options}) => {
     return (
@@ -24,7 +28,17 @@ export default function Preferences() {
       </View>
     );
   }
-  
+
+  /* useEffect(() => (async () => {
+    const stored = await AsyncStorage.getItem('preferences')
+    console.log(`stored: ${JSON.parse} !`);
+    if (stored) {
+      setText(stored);
+    })()
+}(), [navigation]); */
+
+
+
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
     
