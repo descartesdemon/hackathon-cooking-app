@@ -1,7 +1,8 @@
-import { Alert, Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Button, StyleSheet, Text, View} from 'react-native';
 import { useState, useRef } from 'react';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { useNavigation } from 'expo-router';
+import Loading from '@/components/Loading'
 import OpenAI from "openai";
 
 const api_key = 'sk-proj-RRaU29oFQPBxdrQ8A315T3BlbkFJ7LwKTCwpE1CRw1LohoIj';
@@ -13,6 +14,7 @@ const openai = new OpenAI({apiKey: api_key});
 export default function Camera() {
   const [facing, setFacing] = useState('back');
   const [permission, requestPermission] = useCameraPermissions();
+  const [loading, setLoading] = useState(false);
   const cameraRef = useRef(null);
   const navigation = useNavigation();
   /*return (
@@ -30,6 +32,8 @@ export default function Camera() {
   const takePicture = async () => {
     if (cameraRef.current) {
       const options = { quality: 0.5, base64: true };
+      //Loading here
+      setLoading(true);
       const data = await cameraRef.current.takePictureAsync(options);
       // console.log(data.base64);
       const response = await openai.chat.completions.create({
@@ -49,6 +53,7 @@ export default function Camera() {
           },
         ],
       });
+      setLoading(false);
       navigation.navigate("start", {ingredients: response.choices[0].message.content});
       //navigation.navigate("start", {ingredients: "carrots potatoes banana"});
       //console.log(response.choices[0]);
@@ -84,6 +89,7 @@ export default function Camera() {
 
   return (
     <View style={styles.container}>
+      <Loading isLoading={loading} />
       <CameraView ref = {cameraRef} style={styles.camera} facing={'back'}>
       <View style={styles.buttonContainer}>
           <Button title="Take Picture" onPress={takePicture} />
