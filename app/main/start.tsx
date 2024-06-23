@@ -2,7 +2,7 @@ import { Stack, useNavigation } from 'expo-router';
 import { Text, ScrollView, View, TextInput, Button, TouchableOpacity, FlatList, StyleSheet } from "react-native";
 import React, { useState, useEffect } from "react";
 
-const cuisines = ['Mexican', 'Chinese', 'Italian', 'Indian', /* etc. */];
+const cuisines = ['Mexican', 'Chinese', 'Italian', 'Indian', 'Thai', 'French', 'Russian', 'German' /* etc. */];
 
 const cuisineStyles = StyleSheet.create({
   container: {
@@ -21,9 +21,10 @@ const cuisineStyles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+    alignItems: 'center', // Add this line
   },
   button: {
-    margin: 5,
+    margin: 2,
     backgroundColor: 'blue',
   },
 });
