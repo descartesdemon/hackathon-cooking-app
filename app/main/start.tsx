@@ -1,5 +1,7 @@
-import { Stack, useNavigation } from 'expo-router';
+import { useNavigation } from 'expo-router';
+import { useRoute } from '@react-navigation/native';
 import { Text, ScrollView, View, TextInput, Button, TouchableOpacity, FlatList, StyleSheet } from "react-native";
+import { Colors } from '@/constants/Colors';
 import React, { useState, useEffect } from "react";
 
 const cuisines = ['Mexican', 'Chinese', 'Italian', 'Indian', 'Thai', 'French', 'Russian', 'German' /* etc. */];
@@ -13,7 +15,7 @@ const cuisineStyles = StyleSheet.create({
   darkBackground: {
     marginTop: 10,
     width: '90%',
-    backgroundColor: '#DDDDDD', // Slightly darker background
+    backgroundColor: 'BBBBBB', // Slightly darker background
     padding: 10,
     marginBottom: -10,
   },
@@ -42,11 +44,23 @@ const renderButton = ({ item }) => (
 export default function Start() {
   const [text, setText] = useState("");
 
+  const route = useRoute();
   const navigation = useNavigation();
+  const params = route.params;
 
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
+
+
+  useEffect(() => {
+    navigation.setOptions({ headerShown: false });
+    console.log
+    console.log(params);
+    if (params) {
+      setText(params.ingredients);
+    }
+  }, [route]);
 
   return (
       /*<View
@@ -57,7 +71,7 @@ export default function Start() {
         }}
       >*/
       <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>What's in your fridge?</Text>
+        <Text style = {{ fontFamily: 'Inter-Variable', fontSize: 32, color: "black" }}></Text>
         <TextInput
         style={{ height: 70, borderColor: 'gray', borderWidth: 1, width: '80%', marginTop: 20 }}
         onChangeText={setText}
@@ -75,20 +89,18 @@ export default function Start() {
         </View>
 
         <View style={cuisineStyles.darkBackground}>
-        <View style={cuisineStyles.buttonContainer}>
-        {cuisines.map((cuisine) => (
-          <View style={cuisineStyles.button} key={cuisine}>
-            <Button
-              title={cuisine}
-              color="#fff"
-              onPress={() => console.log(`${cuisine} button pressed`)} // Replace with your own function
-            />
-          </View>
-        ))}
+          <View style={cuisineStyles.buttonContainer}>
+          {cuisines.map((cuisine) => (
+            <View style={cuisineStyles.button} key={cuisine}>
+              <Button
+                title={cuisine}
+                color="#fff"
+                onPress={() => console.log(`${cuisine} button pressed`)} // Replace with your own function
+              />
+            </View>
+          ))}
         </View>
       </View>
-
-        
 
         <View style={{ marginTop: 20, width: '80%', backgroundColor: 'green' }}>
           <Button

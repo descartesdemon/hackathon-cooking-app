@@ -20,7 +20,10 @@ export default function TabLayout() {
       },
     }}>
     {/* Optionally configure static options outside the route.*/}
-    <Stack.Screen name="start" options={{}}/>
+    <Stack.Screen name="start" options={{title: 'Start'}}/>
+    <Stack.Screen name="camera" options={{title: 'Camera'}}/>
+    <Stack.Screen name="preferences" options={{title: 'Preferences'}}/>
+    <Stack.Screen name="recipes" options={{title: 'Recipes'}}/>
   </Stack>
   );
 }

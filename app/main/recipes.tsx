@@ -3,7 +3,9 @@ import React, { useState, useEffect } from "react";
 import { Image } from "react-native";
 import OpenAI from "openai";
 
-const api_key = 'sk-proj-RRaU29oFQPBxdrQ8A315T3BlbkFJ7LwKTCwpE1CRw1LohoIj';
+//const api_key = 'sk-proj-RRaU29oFQPBxdrQ8A315T3BlbkFJ7LwKTCwpE1CRw1LohoIj';
+
+const api_key = null;
 
 const openai = new OpenAI({apiKey: api_key});
 
@@ -26,6 +28,10 @@ const RecipeDisplayItem = ({recipe}) => {
       </TouchableOpacity>
     </View>
   )
+}
+
+const generateRecipeItem = ({ingredients}) => {
+  
 }
 
 const generatePictureByName = async name => {

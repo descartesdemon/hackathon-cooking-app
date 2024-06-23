@@ -25,7 +25,6 @@ export default function TabLayout() {
       />
       <Tabs.Screen
         name="discover"
-        initialParams={{ screen: 'Discover' }}
         options={{
           title: 'Discover',
           tabBarIcon: ({ color, focused }) => (
@@ -35,7 +34,6 @@ export default function TabLayout() {
       />
       <Tabs.Screen
         name="main"
-        initialParams={{ screen: 'Start' }}
         options={{
           title: 'Cook',
           tabBarIcon: ({ color, focused }) => (
