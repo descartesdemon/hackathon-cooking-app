@@ -13,7 +13,8 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.descartesdemon.cooking"
     },
     "android": {
       "adaptiveIcon": {
@@ -28,13 +29,25 @@
     },
     "plugins": [
       "expo-router",
-      ["expo-font",
-      {
-        "fonts": ["./assets/fonts/Inter-Variable.ttf"]
-      }]
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/Inter-Black.ttf"
+          ]
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "82df6a87-b363-4119-92b9-323ebc2d100c"
+      }
     }
   }
 }

@@ -59,7 +59,8 @@ const fixPicture = async recipe => {
       };
     } catch (error) {
       console.error(`Failed to generate picture for ${recipe.name}: ${error}`);
-      return recipe; // Return the original recipe if picture generation fails
+      //return recipe; // Return the original recipe if picture generation fails
+      return recipe;
     }
   }
 }

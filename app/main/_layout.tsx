@@ -8,13 +8,14 @@ export default function TabLayout() {
   
   //const [preferences, setPreferences] = useState(0);
 
+  
   return (
     <Stack
     screenOptions={{
       headerStyle: {
-        backgroundColor: '#f4511e',
+        backgroundColor: '#E0E0E0', // Slightly darker shade of white
       },
-      headerTintColor: '#fff',
+      headerTintColor: '#333', // Dark color for the text
       headerTitleStyle: {
         fontWeight: 'bold',
       },
@@ -24,6 +25,7 @@ export default function TabLayout() {
     <Stack.Screen name="camera" options={{title: 'Camera'}}/>
     <Stack.Screen name="preferences" options={{title: 'Preferences'}}/>
     <Stack.Screen name="recipes" options={{title: 'Recipes'}}/>
+    <Stack.Screen name="recipe-expansion" options={{title: 'Recipe'}}/>{/*Use context to change title in future */}
   </Stack>
   );
 }

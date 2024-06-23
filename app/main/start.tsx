@@ -1,7 +1,6 @@
 import { useNavigation } from 'expo-router';
 import { useRoute } from '@react-navigation/native';
 import { Text, ScrollView, View, TextInput, Button, TouchableOpacity, FlatList, StyleSheet } from "react-native";
-import { Colors } from '@/constants/Colors';
 import React, { useState, useEffect } from "react";
 
 const cuisines = ['Mexican', 'Chinese', 'Italian', 'Indian', 'Thai', 'French', 'Russian', 'German' /* etc. */];
@@ -71,7 +70,7 @@ export default function Start() {
         }}
       >*/
       <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style = {{ fontFamily: 'Inter-Variable', fontSize: 32, color: "black" }}></Text>
+        <Text style = {{ fontFamily: 'Inter-Black', fontSize: 32, color: "black" }}>What's in your fridge?</Text>
         <TextInput
         style={{ height: 70, borderColor: 'gray', borderWidth: 1, width: '80%', marginTop: 20 }}
         onChangeText={setText}
@@ -106,7 +105,7 @@ export default function Start() {
           <Button
             title="Show Recipes"
             color="#fff"
-            onPress={() => navigation.navigate('recipes')}
+            onPress={() => navigation.navigate('recipes', text.length > 0 ? {ingredients: text} : null)}
           />
         </View>
 
